@@ -1,4 +1,4 @@
-# Personal Finance Tracker 💰
+# SovereignSpend 💰
 
 A modern, AI-powered personal finance tracker with multi-account support, automated transaction classification, and beautiful data visualizations.
 
@@ -54,7 +54,7 @@ A modern, AI-powered personal finance tracker with multi-account support, automa
 
 1. **Clone or navigate to the project directory:**
    ```bash
-   cd path/to/finance-tracker
+   cd path/to/SovereignSpend
    ```
 
 2. **Create a virtual environment:**
@@ -173,7 +173,7 @@ Once the server is running, visit `http://localhost:8000/docs` for interactive A
 ## Project Structure
 
 ```
-Finance tracker/
+SovereignSpend/
 ├── backend/
 │   ├── __init__.py
 │   ├── main.py                 # FastAPI application

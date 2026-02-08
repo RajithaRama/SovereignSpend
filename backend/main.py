@@ -5,7 +5,7 @@ from backend.database import init_db
 from backend.routes import accounts, transactions, upload, dashboard
 import os
 
-app = FastAPI(title="Personal Finance Tracker API")
+app = FastAPI(title="SovereignSpend API")
 
 # CORS configuration to allow frontend access
 app.add_middleware(
@@ -31,7 +31,7 @@ app.include_router(dashboard.router)
 @app.get("/api/health")
 def health_check():
     """Health check endpoint"""
-    return {"status": "healthy", "message": "Finance Tracker API is running"}
+    return {"status": "healthy", "message": "SovereignSpend API is running"}
 
 # Serve static frontend files
 frontend_dir = os.path.join(os.path.dirname(__file__), "..", "frontend")

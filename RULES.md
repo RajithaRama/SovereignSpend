@@ -1,6 +1,6 @@
 # Transaction Rules
 
-The Finance Tracker supports automatic transaction processing using a powerful rules engine. Rules can categorize transactions, link transactions between accounts, and more.
+SovereignSpend supports automatic transaction processing using a powerful rules engine. Rules can categorize transactions, link transactions between accounts, and more.
 
 ## Rule Types
 
