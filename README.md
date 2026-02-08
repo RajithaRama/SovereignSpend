@@ -224,11 +224,7 @@ SovereignSpend/
 ## Future Enhancements
 
 - Budget planning and tracking
-- Recurring transaction support
-- Export to CSV/PDF
 - Multi-currency support
-- Email notifications
-- Mobile app
 
 ## License
 
