@@ -170,6 +170,9 @@ Once the server is running, visit `http://localhost:8000/docs` for interactive A
 - `GET /api/dashboard/timeseries` - Timeseries data
 - `GET /api/dashboard/accounts-overview` - Per-account overview
 
+**Backups:**
+- `POST /api/backup/` - Trigger a manual backup
+
 ## Project Structure
 
 ```
@@ -208,9 +211,10 @@ SovereignSpend/
 - Check the configured URL in `.env`
 - Verify models are installed: `ollama list`
 
-**Database issues:**
-- Delete `finance_tracker.db` to reset the database
-- Restart the server
+**Database Management:**
+- **Backup:** Run `python backup_dbs.py` to create a timestamped backup in the `backups/` directory.
+- **Restore:** To restore, simpler copy a backup file from `backups/` to the root directory and rename it to `finance_tracker.db` (or `finance_tracker_test.db`).
+- **Reset:** Delete `finance_tracker.db` to reset the database, then restart the server.
 
 **File upload issues:**
 - Ensure uploads directory exists
