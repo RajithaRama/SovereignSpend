@@ -1,0 +1,52 @@
+[
+    {
+        "pattern": "TESCO.*",
+        "category": "Groceries",
+        "description": "Tesco supermarket purchases"
+    },
+    {
+        "pattern": "SPOTIFY.*",
+        "category": "Entertainment",
+        "description": "Spotify subscription"
+    },
+    {
+        "pattern": "NETFLIX.*",
+        "category": "Entertainment",
+        "description": "Netflix subscription"
+    },
+    {
+        "pattern": "SHELL.*|CIRCLE K.*|TEXACO.*",
+        "category": "Transport",
+        "description": "Fuel purchases"
+    },
+    {
+        "pattern": "LIDL.*|ALDI.*|DUNNES.*",
+        "category": "Groceries",
+        "description": "Supermarket purchases"
+    },
+    {
+        "pattern": "AMAZON.*",
+        "category": "Shopping",
+        "description": "Amazon purchases"
+    },
+    {
+        "pattern": "UBER.*|TAXI.*",
+        "category": "Transport",
+        "description": "Taxi and ride-sharing"
+    },
+    {
+        "pattern": ".*RESTAURANT.*|.*CAFE.*|.*COFFEE.*",
+        "category": "Dining",
+        "description": "Restaurants and cafes"
+    },
+    {
+        "pattern": ".*GYM.*|.*FITNESS.*",
+        "category": "Health",
+        "description": "Gym and fitness"
+    },
+    {
+        "pattern": "ELECTRIC IRELAND.*|ENERGIA.*",
+        "category": "Utilities",
+        "description": "Electricity bills"
+    }
+]

@@ -1,0 +1,27 @@
+[
+    {
+        "pattern": "SALARY.*|PAYROLL.*",
+        "category": "Income",
+        "description": "Salary payments"
+    },
+    {
+        "pattern": "RENT.*|LANDLORD.*",
+        "category": "Housing",
+        "description": "Rent payments"
+    },
+    {
+        "pattern": "MORTGAGE.*",
+        "category": "Housing",
+        "description": "Mortgage payments"
+    },
+    {
+        "pattern": "INSURANCE.*",
+        "category": "Insurance",
+        "description": "Insurance premiums"
+    },
+    {
+        "pattern": "MEDICAL.*|PHARMACY.*|DOCTOR.*|HOSPITAL.*",
+        "category": "Healthcare",
+        "description": "Medical expenses"
+    }
+]

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Tracker - Manage Your Finances with AI</title>
+    <meta name="description"
+        content="Personal finance tracker with AI-powered invoice processing and transaction classification">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <h1 class="logo" id="logo">💰 Finance Tracker</h1>
+            <nav>
+                <button class="nav-btn active" data-view="dashboard">Dashboard</button>
+                <button class="nav-btn" data-view="accounts">Accounts</button>
+                <button class="nav-btn" data-view="transactions">Transactions</button>
+                <button class="nav-btn" data-view="upload">Upload</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Dashboard View -->
+        <div id="dashboard-view" class="view">
+            <h2 class="mb-4">Dashboard</h2>
+
+            <div class="stats-grid" id="stats-grid">
+                <!-- Stats will be populated by JavaScript -->
+            </div>
+
+            <div class="chart-grid">
+                <div class="glass-card">
+                    <h3 class="mb-3">Financial Trends</h3>
+                    <canvas id="timeseriesChart"></canvas>
+                </div>
+
+                <div class="glass-card">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3 class="mb-0">Spending by Category</h3>
+                        <div id="category-total-display" style="font-weight: 700; color: #f56565; font-size: 1.1rem;">
+                        </div>
+                    </div>
+                    <div id="category-chart-container" style="position: relative;">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                    <div
+                        style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 1rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+                        <select id="category-month"
+                            style="padding: 0.25rem; border-radius: 0.25rem; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-primary);">
+                            <option value="">Last 30 Days</option>
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                        <select id="category-year"
+                            style="padding: 0.25rem; border-radius: 0.25rem; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-primary);">
+                            <!-- Populated by JS -->
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- Category Drill-down Section -->
+            <div id="category-details-section" class="glass-card mt-4 hidden">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h3 id="category-details-title" class="mb-0">Transactions</h3>
+                    <button class="btn btn-secondary btn-sm"
+                        onclick="document.getElementById('category-details-section').classList.add('hidden')">Close</button>
+                </div>
+                <div id="category-details-table">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <div class="glass-card mt-4">
+                <h3 class="mb-3">Category Spending Trends</h3>
+                <canvas id="categoryTimeseriesChart" style="max-height: 400px;"></canvas>
+            </div>
+
+            <div class="glass-card">
+                <h3 class="mb-3">Account Overview</h3>
+                <div id="accounts-overview">
+                    <!-- Account cards will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div class="glass-card mt-4">
+                <h3 class="mb-3">Recent Transactions</h3>
+                <div id="recent-transactions">
+                    <!-- Recent transactions will be populated by JavaScript -->
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- Accounts View -->
+        <div id="accounts-view" class="view hidden">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2>Accounts</h2>
+                <button class="btn btn-primary" id="add-account-btn">+ Add Account</button>
+            </div>
+
+            <div id="accounts-list" class="stats-grid">
+                <!-- Accounts will be populated by JavaScript -->
+            </div>
+
+            <!-- Add Account Modal -->
+            <div id="add-account-modal" class="hidden">
+                <div class="glass-card">
+                    <h3 class="mb-3">Add New Account</h3>
+                    <form id="add-account-form">
+                        <div class="form-group">
+                            <label for="account-name">Account Name</label>
+                            <input type="text" id="account-name" required placeholder="e.g., Main Checking">
+                        </div>
+                        <div class="form-group">
+                            <label for="account-balance">Initial Balance</label>
+                            <input type="number" id="account-balance" step="0.01" value="0" required>
+                        </div>
+                        <div style="display: flex; gap: 1rem;">
+                            <button type="submit" class="btn btn-primary">Create Account</button>
+                            <button type="button" class="btn btn-secondary" id="cancel-account-btn">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transactions View -->
+        <div id="transactions-view" class="view hidden">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2>Transactions</h2>
+                <div style="display: flex; gap: 1rem;">
+                    <button class="btn btn-secondary" id="run-rules-btn">⚡ Run Rules</button>
+                    <button class="btn btn-secondary" id="add-transfer-btn">↔️ Transfer</button>
+                    <button class="btn btn-primary" id="add-transaction-btn">+ Add Transaction</button>
+                </div>
+            </div>
+
+            <div class="glass-card mb-4">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div class="form-group">
+                        <label for="filter-account">Filter by Account</label>
+                        <select id="filter-account">
+                            <option value="">All Accounts</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="filter-category">Filter by Category</label>
+                        <select id="filter-category">
+                            <option value="">All Categories</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div id="transactions-table-container">
+                    <!-- Transactions table will be populated by JavaScript -->
+                </div>
+                <div id="pagination-controls"
+                    style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                    <!-- Pagination will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Upload View -->
+        <div id="upload-view" class="view hidden">
+            <h2 class="mb-4">Upload Documents</h2>
+
+            <div class="chart-grid">
+                <div class="glass-card">
+                    <h3 class="mb-3">Upload Invoice</h3>
+                    <div class="upload-zone" id="invoice-upload-zone">
+                        <div class="upload-icon">📄</div>
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                            Drag and drop PDF invoice here or click to browse
+                        </p>
+                        <input type="file" id="invoice-file-input" accept=".pdf" style="display: none;">
+                        <button class="btn btn-primary" onclick="document.getElementById('invoice-file-input').click()">
+                            Choose File
+                        </button>
+                    </div>
+                    <div id="invoice-upload-status" class="mt-3"></div>
+                </div>
+
+                <div class="glass-card">
+                    <h3 class="mb-3">Upload Bank Statement</h3>
+                    <div class="form-group">
+                        <label for="statement-account">Select Account</label>
+                        <select id="statement-account" required>
+                            <option value="">Choose Account...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="statement-bank">Select Bank</label>
+                        <select id="statement-bank" required>
+                            <option value="AIB" selected>AIB</option>
+                            <option value="Revolut">Revolut</option>
+                        </select>
+                    </div>
+                    <div class="upload-zone" id="statement-upload-zone">
+                        <div class="upload-icon">🏦</div>
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                            Drag and drop PDF or CSV bank statement here or click to browse
+                        </p>
+                        <input type="file" id="statement-file-input" accept=".pdf,.csv" style="display: none;">
+                        <button class="btn btn-primary"
+                            onclick="document.getElementById('statement-file-input').click()">
+                            Choose File
+                        </button>
+                    </div>
+                    <div id="statement-upload-status" class="mt-3"></div>
+                </div>
+            </div>
+
+            <!-- Foreign Currency Review Modal -->
+            <div id="foreign-currency-modal" class="modal hidden">
+                <div class="modal-overlay"></div>
+                <div class="modal-content glass-card" style="max-width: 800px; max-height: 80vh; overflow-y: auto;">
+                    <h3 class="mb-3">⚠️ Foreign Currency Transactions Found</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                        The following transactions are not in EUR. Please enter the EUR equivalent for each transaction
+                        you want to import:
+                    </p>
+                    <div id="foreign-transactions-table" class="mb-4"></div>
+                    <div
+                        style="display: flex; gap: 1rem; justify-content: flex-end; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                        <button class="btn btn-secondary" id="cancel-foreign-btn">Cancel</button>
+                        <button class="btn btn-primary" id="import-foreign-btn">Import Verified Transactions</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+    <script src="components/dashboard.js"></script>
+    <script src="components/upload.js"></script>
+    <script src="components/transactions.js"></script>
+    <script src="components/accounts.js"></script>
+</body>
+
+</html>
